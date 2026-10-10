@@ -9,12 +9,12 @@
 Summary:	Polkit-qt5-1 - Qt 5 API wrapper library around polkit
 Summary(pl.UTF-8):	Polkit-qt5-1 - obudowanie bibliotek polkit w API Qt 5
 Name:		polkit-qt5-1
-Version:	0.175.0
-Release:	2
+Version:	0.201.1
+Release:	1
 License:	LGPL v2+
 Group:		Libraries
-Source0:	https://download.kde.org/unstable/polkit-qt-1/polkit-qt-1-%{version}.tar.xz
-# Source0-md5:	682f9bb896006e384519beb9061875bf
+Source0:	https://download.kde.org/stable/polkit-qt-1/polkit-qt-1-%{version}.tar.xz
+# Source0-md5:	0b255fb033de543c3010ebec33f4d233
 URL:		https://techbase.kde.org/Projects/KAuth/Polkit-Qt-1
 BuildRequires:	cmake >= 3.11
 BuildRequires:	glib2-devel >= 1:2.36
