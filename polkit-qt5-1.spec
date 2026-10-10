@@ -13,14 +13,17 @@ Version:	0.175.0
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
-Source0:	http://download.kde.org/unstable/polkit-qt-1/polkit-qt-1-%{version}.tar.xz
+Source0:	https://download.kde.org/unstable/polkit-qt-1/polkit-qt-1-%{version}.tar.xz
 # Source0-md5:	682f9bb896006e384519beb9061875bf
 URL:		https://techbase.kde.org/Projects/KAuth/Polkit-Qt-1
-BuildRequires:	cmake >= 2.8.11
-BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	cmake >= 3.11
+BuildRequires:	glib2-devel >= 1:2.36
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	pkgconfig
 BuildRequires:	polkit-devel >= 0.96
 BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 %if %{with qt5}
 BuildRequires:	Qt5Core-devel >= %{qt5_ver}
 BuildRequires:	Qt5DBus-devel >= %{qt5_ver}
@@ -61,7 +64,6 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt5-1
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	Qt5Core-devel >= %{qt5_ver}
-Requires:	Qt5DBus-devel >= %{qt5_ver}
 
 %description devel
 Development files for Polkit-qt5-1 core library.
@@ -74,7 +76,6 @@ Summary:	Qt 5 API wrapper arount polkit-agent library
 Summary(pl.UTF-8):	Obudowanie biblioteki polkit-agent w API Qt 5
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	Qt5Gui >= %{qt5_ver}
 
 %description agent
 Qt 5 API wrapper arount polkit-agent library.
@@ -88,6 +89,7 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt5-1 Agent
 Group:		Development/Libraries
 Requires:	%{name}-agent = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
+# only in .pc file, redundant?
 Requires:	Qt5Gui-devel >= %{qt5_ver}
 
 %description agent-devel
@@ -102,6 +104,7 @@ Summary(pl.UTF-8):	Obudowanie biblioteki polkit w API Qt 5 - funkcje GUI
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	Qt5Gui >= %{qt5_ver}
+Requires:	Qt5Widgets >= %{qt5_ver}
 
 %description gui
 Qt 5 API wrapper arount polkit library - GUI functions.
@@ -113,11 +116,13 @@ Obudowanie biblioteki polkit w API Qt 5 - funkcje GUI.
 Summary:	Development files for Polkit-qt5-1 GUI library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt5-1 GUI
 Group:		Development/Libraries
-Requires:	%{name}-gui = %{version}-%{release}
-# polkit-qt-agent-1 is required by polkit-qt-1.pc
+# polkit-qt-agent-1 is required by polkit-qt5-1.pc
 Requires:	%{name}-agent-devel = %{version}-%{release}
 Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gui = %{version}-%{release}
 Requires:	Qt5Gui-devel >= %{qt5_ver}
+# not required by .pc, but <QAction> is in QtWidgets headers in qt5
+Requires:	Qt5Widgets-devel >= %{qt5_ver}
 
 %description gui-devel
 Development files for Polkit-qt5-1 GUI library.
@@ -147,7 +152,6 @@ Summary:	Development files for Polkit-qt6-1 core library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt6-1
 Group:		Development/Libraries
 Requires:	Qt6Core-devel >= %{qt6_ver}
-Requires:	Qt6DBus-devel >= %{qt6_ver}
 Requires:	polkit-qt6-1 = %{version}-%{release}
 
 %description -n polkit-qt6-1-devel
@@ -160,7 +164,6 @@ Pliki programistyczne biblioteki Polkit-qt6-1.
 Summary:	Qt 6 API wrapper arount polkit-agent library
 Summary(pl.UTF-8):	Obudowanie biblioteki polkit-agent w API Qt 6
 Group:		Libraries
-Requires:	Qt6Gui >= %{qt6_ver}
 Requires:	polkit-qt6-1 = %{version}-%{release}
 
 %description -n polkit-qt6-1-agent
@@ -173,6 +176,7 @@ Obudowanie biblioteki polkit-agent w API Qt 6.
 Summary:	Development files for Polkit-qt6-1 Agent library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt6-1 Agent
 Group:		Development/Libraries
+# only in .pc file, redundant?
 Requires:	Qt6Gui-devel >= %{qt6_ver}
 Requires:	polkit-qt6-1-agent = %{version}-%{release}
 Requires:	polkit-qt6-1-devel = %{version}-%{release}
@@ -188,6 +192,7 @@ Summary:	Qt 6 API wrapper arount polkit library - GUI functions
 Summary(pl.UTF-8):	Obudowanie biblioteki polkit w API Qt 6 - funkcje GUI
 Group:		Libraries
 Requires:	Qt6Gui >= %{qt6_ver}
+Requires:	Qt6Widgets >= %{qt6_ver}
 Requires:	polkit-qt6-1 = %{version}-%{release}
 
 %description -n polkit-qt6-1-gui
@@ -200,11 +205,11 @@ Obudowanie biblioteki polkit w API Qt 6 - funkcje GUI.
 Summary:	Development files for Polkit-qt6-1 GUI library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Polkit-qt6-1 GUI
 Group:		Development/Libraries
-Requires:	polkit-qt6-1-gui = %{version}-%{release}
-# polkit-qt6-agent-1 is required by polkit-qt6-1.pc
 Requires:	Qt6Gui-devel >= %{qt6_ver}
+# polkit-qt6-agent-1 is required by polkit-qt6-1.pc
 Requires:	polkit-qt6-1-agent-devel = %{version}-%{release}
 Requires:	polkit-qt6-1-devel = %{version}-%{release}
+Requires:	polkit-qt6-1-gui = %{version}-%{release}
 
 %description -n polkit-qt6-1-gui-devel
 Development files for Polkit-qt6-1 GUI library.
@@ -276,7 +281,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS README README.porting TODO
-%attr(755,root,root) %{_libdir}/libpolkit-qt5-core-1.so.*.*.*
+%{_libdir}/libpolkit-qt5-core-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt5-core-1.so.1
 
 %files devel
@@ -303,7 +308,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files agent
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpolkit-qt5-agent-1.so.*.*.*
+%{_libdir}/libpolkit-qt5-agent-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt5-agent-1.so.1
 
 %files agent-devel
@@ -315,7 +320,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpolkit-qt5-gui-1.so.*.*.*
+%{_libdir}/libpolkit-qt5-gui-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt5-gui-1.so.1
 
 %files gui-devel
@@ -331,7 +336,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n polkit-qt6-1
 %defattr(644,root,root,755)
 %doc AUTHORS README README.porting TODO
-%attr(755,root,root) %{_libdir}/libpolkit-qt6-core-1.so.*.*.*
+%{_libdir}/libpolkit-qt6-core-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt6-core-1.so.1
 
 %files -n polkit-qt6-1-devel
@@ -358,7 +363,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n polkit-qt6-1-agent
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpolkit-qt6-agent-1.so.*.*.*
+%{_libdir}/libpolkit-qt6-agent-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt6-agent-1.so.1
 
 %files -n polkit-qt6-1-agent-devel
@@ -370,7 +375,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n polkit-qt6-1-gui
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpolkit-qt6-gui-1.so.*.*.*
+%{_libdir}/libpolkit-qt6-gui-1.so.*.*.*
 %ghost %{_libdir}/libpolkit-qt6-gui-1.so.1
 
 %files -n polkit-qt6-1-gui-devel
